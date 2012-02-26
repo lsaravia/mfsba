@@ -1,6 +1,6 @@
 .PHONY : clean
 
-vpath_src=.. ../../fortify ../../randlib/src ../CaNew
+vpath_src=.. ../../randlib/src 
 vpath %.c    $(vpath_src)
 vpath %.cpp  $(vpath_src)
 vpath %.hpp  $(vpath_src)
@@ -15,7 +15,7 @@ X11LIBS=-L$(X11BASE)/lib -lX11
 
 SDLDEFS = -D__XWIN__
 
-I_DIRS=-I../../fortify -I.. -I../../randlib/src -I../CaNew
+I_DIRS=-I.. -I../../randlib/src 
 #P_DEFS=-DGRAPHICS -DPERIODIC_BOUNDARY
 
 #CFLAGS = -O3 -Wall -Ic:/cpp/fortify -Ic:/cpp/canew -DGRAPHICS -DFORTIFY -fexternal-templates 
