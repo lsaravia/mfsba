@@ -20,4 +20,23 @@ parameters p1=1 p2=1 p3=0.5 p4=0.5 this is explained in:
 Martinez, V J, et al. 1990 Clustering paradigms and multifractal measures. 
 Astrophysical Journal 357: 50-61.
 
-q21.sed is a file with q values used to estimat spectra.
+q21.sed is a file with q values used to estimate spectra.
+
+License
+=======
+
+	Copyright 2011 Leonardo A. Saravia
+ 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
