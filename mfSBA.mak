@@ -26,6 +26,7 @@ O = mainMfSBA.o mfSBA.o RWFile.o
 L = -lm -ltiff
 
 MAIN_TARGET=mfSBA
+
 all: $(O)
 	g++ -o $(MAIN_TARGET) $(O) $(L)
 

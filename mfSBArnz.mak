@@ -1,6 +1,6 @@
 .PHONY : clean
 
-vpath_src=.. ../fortify ../randlib/src  
+vpath_src=.. ../../randlib/src  
 vpath %.c    $(vpath_src)
 vpath %.cpp  $(vpath_src)
 vpath %.hpp  $(vpath_src)
@@ -15,7 +15,7 @@ X11LIBS=-L$(X11BASE)/lib -lX11
 
 SDLDEFS = -D__XWIN__
 
-I_DIRS=-I../fortify -I.. -I../randlib/src
+I_DIRS=-I../fortify -I.. -I../../randlib/src
 #P_DEFS=-DGRAPHICS -DPERIODIC_BOUNDARY
 
 #CFLAGS = -O3 -Wall -Ic:/cpp/fortify -Ic:/cpp/canew -DGRAPHICS -DFORTIFY -fexternal-templates 
@@ -25,14 +25,15 @@ O = mainMfSBArnz.o mfSBA.o RWFile.o randomizations.o linpack.o randlib.o com.o
 
 L = -lm -ltiff
 
-mfSBArnz: $(O)
-	g++ -o mfSBArnz $(O) $(L)
+MAIN_TARGET=mfSBArnz
+all: $(O)
+	g++ -o $(MAIN_TARGET) $(O) $(L)
 
 clean:
-	rm mfSBArnz $(O)
-
+	rm $(MAIN_TARGET) $(O) 
 
 # DEPENDENCIES
+all:
 
 linpack.o : linpack.c 
 
