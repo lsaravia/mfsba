@@ -36,5 +36,7 @@ int PairCorrelation(simplmat <double> &pixval, char * outFile,
 int MoranIRook(simplmat <double> &data, const char * outFile, const char * ident);
 int PatchStats(simplmat <double> &data,int numSpecies, const char * outFile,const char * ident);
 
+int MultispeciesReordering(simplmat <double> &data, simplmat <double> &newdata );
+
 #endif  // MF_H
 
