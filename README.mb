@@ -1,10 +1,11 @@
 
 Multifractal estimation using a standard box-counting algorithm
+===============================================================
 
 Software used to determine multifractal spectra: Generalized dimensions Dq and spectrum 
 of singularities f(alfa), the software was used in the paper:
 
-﻿Saravia LA, et al. 2012. Multifractal growth in periphyton communities. Oikos 0, 0.
+﻿Saravia LA, et al. 2012. Multifractal growth in periphyton communities. Oikos.
 
 mfSBA estimate both spectra and outputs data to evaluate the fits
 
