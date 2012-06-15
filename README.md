@@ -7,7 +7,8 @@ of singularities f(alfa), the software was used in the paper:
 
 ﻿Saravia LA, et al. 2012. Multifractal growth in periphyton communities. Oikos.
 
-mfSBA estimate both spectra and outputs data to evaluate the fits
+mfSBA estimate both spectra and outputs data to evaluate the fits. A more detailed
+description is in the file mfSBA_README.
 
 mfSBArnz estimate the Dq spectrun and randomize the original image N times to 
 calculate a confidence interval to test the hipothesis that the original distribution
