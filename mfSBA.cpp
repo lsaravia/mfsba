@@ -133,7 +133,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	box.resize(numBoxSizes);
    	int finDimX=0,finDimY=0;
 
-	for(finDimX=0,i=1;finDimX<minBoxSize;finDimX=pow(2.0,i))
+	for(finDimX=0,i=0;finDimX<minBoxSize;finDimX=pow(2.0,i))
     	i++;
     int minPot=i;
     
@@ -151,6 +151,8 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	for(finDimX=0;finDimX<xDim;finDimX=pow(2.0,i))
     	i++;
 	finDimX=pow(2.0,i-1);
+	for(finDimY=0,i=1;finDimY<yDim;finDimY=pow(2.0,i))
+    	i++;
 	finDimY=pow(2.0,i-1);
 
 	int numRep;
