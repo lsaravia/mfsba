@@ -175,6 +175,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 
 			boxIni.fill(0);
 			boxFin.fill(finDimX);
+			boxFin(0,1)=boxFin(1,1)=boxFin(2,1)=boxFin(3,1)=finDimY;
 			numRep=1;
 			
 			if( xResto>0 && yResto>0  )
@@ -186,8 +187,8 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 				boxIni(3,1)= yResto;
 				boxFin(1,0)= finDimX+xResto;
 				boxFin(3,0)= finDimX+xResto;
-				boxFin(2,1)= finDimX+yResto;
-				boxFin(3,1)= finDimX+yResto;
+				boxFin(2,1)= finDimY+yResto;
+				boxFin(3,1)= finDimY+yResto;
 
 			}
 			if( xResto>0  && yResto==0)
@@ -200,7 +201,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 			{
 				numRep=2;
 				boxIni(1,1)= yResto;
-				boxFin(1,1)= finDimX+xResto;
+				boxFin(1,1)= finDimY+yResto;
 			}
 
 			for(int rep=0;rep<numRep;rep++)
@@ -396,6 +397,8 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 //	pixval: Measure
 //  fileout: Archivo de Output
 //
+//  Warning: assume dimX==dimY and minBoxSize=4
+//
 int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFile, 
 	int minBoxSize, int maxBoxSize, int numBoxSizes, char normalize, char * ident)
 {
@@ -557,8 +560,8 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 				boxIni(3,1)= yResto;
 				boxFin(1,0)= finDimX+xResto;
 				boxFin(3,0)= finDimX+xResto;
-				boxFin(2,1)= finDimX+yResto;
-				boxFin(3,1)= finDimX+yResto;
+				boxFin(2,1)= finDimY+yResto;
+				boxFin(3,1)= finDimY+yResto;
 
 			}
 			if( xResto>0  && yResto==0)
@@ -571,7 +574,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 			{
 				numRep=2;
 				boxIni(1,1)= yResto;
-				boxFin(1,1)= finDimX+xResto;
+				boxFin(1,1)= finDimY+yResto;
 			}
 
 			for(int rep=0;rep<numRep;rep++)
