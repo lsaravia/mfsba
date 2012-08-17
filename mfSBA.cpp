@@ -509,7 +509,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	box.resize(numBoxSizes);
    	int finDimX=0,finDimY=0;
 
-	for(finDimX=0,i=1;finDimX<minBoxSize;finDimX=pow(2.0,i))
+	for(finDimX=0,i=0;finDimX<minBoxSize;finDimX=pow(2.0,i))
     	i++;
     int minPot=i;
     
@@ -527,6 +527,8 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	for(finDimX=0;finDimX<xDim;finDimX=pow(2.0,i))
     	i++;
 	finDimX=pow(2.0,i-1);
+	for(finDimY=0,i=1;finDimY<yDim;finDimY=pow(2.0,i))
+    	i++;
 	finDimY=pow(2.0,i-1);
 
 	int numRep;
@@ -549,6 +551,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 
 			boxIni.fill(0);
 			boxFin.fill(finDimX);
+			boxFin(0,1)=boxFin(1,1)=boxFin(2,1)=boxFin(3,1)=finDimY;
 			numRep=1;
 
 			if( xResto>0 && yResto>0  )
@@ -606,9 +609,8 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 					cerr << "WARNING distribution is sparse cover=" << cover*100 <<"% Add a constant and re-run." << endl;
 					goto AFTERSUM;
 				}
-
 		
-				// to do AlphaQ and FQ
+				// To do AlphaQ and FQ
 
 				//	window movement
 				for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow +=actBoxSize )
