@@ -70,7 +70,7 @@ int MultispeciesReordering(simplmat <double> &data, simplmat <double> &newdata )
 				}
 		if (maxDen==0) break;
 		
-		cout << maxi << "-" << maxDen << "\t";
+		//cout << maxi << "-" << maxDen << "\t";
 		newSpecie++;
 		for(i=0; i<dimY; i++)
 			for(int j=0;j<dimX;j++)
