@@ -231,7 +231,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 					tauQT=log10(piQT);
 				else
 				{
-					cerr << "WARNING distribution is sparse cover=" << cover*100 <<"% Add a constant and re-run." << endl;
+					//cerr << "WARNING distribution is sparse cover=" << cover*100 << endl;
 					goto AFTERSUM;
 				}
 			
@@ -606,7 +606,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 					tauQT=log10(piQT);
 				else
 				{
-					cerr << "WARNING distribution is sparse cover=" << cover*100 <<"% Add a constant and re-run." << endl;
+					// cerr << "WARNING distribution is sparse cover=" << cover*100 << endl;
 					goto AFTERSUM;
 				}
 		
