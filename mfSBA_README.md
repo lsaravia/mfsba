@@ -21,10 +21,10 @@ The program uses boxsize in powers of two, if maxBoxSize is greater than the hal
 numBoxSize: if is less than the number of powers of 2 that number will be used cutting from the bigger ones, so put a bigger number 
 
 **option**
-      + N: Not normalize measure
-      + S: Normalize measure -> SUM all the pixels and divide each pixel by that value
-      + D: Add 1 and normalize -> Add 1 to all the image then normalize
-      + A: Normalize measure and save
+   + N: Not normalize measure
+   + S: Normalize measure -> SUM all the pixels and divide each pixel by that value
+   + D: Add 1 and normalize -> Add 1 to all the image then normalize
+   + A: Normalize measure and save
         
 
 Output:
