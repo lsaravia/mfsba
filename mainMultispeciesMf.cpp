@@ -13,7 +13,7 @@ int main(int argc, char * argv[])
 		cerr << "Takes the most abundant species and assign it the number 1" << endl;
 		cerr << "the following abundant species and assign it the number 2" << endl;
 		cerr << "and the same for all remaining species" << endl;
-		cerr << "The Dq,F(alpha),Alpha estimation use FSA box counting and the canonical method" << endl;
+		cerr << "The Dq,F(alpha),Alpha estimation use box counting and the canonical method" << endl;
 		cerr << "Chhabra, Meneveau, Jensen & Sreenivasan, Phys.Rev.A 40,5284 (1989)" << endl << endl;
 
 		cerr << "Usage: mf inputFile qFile minBox maxBox numBoxSizes option" << endl

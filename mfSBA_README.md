@@ -27,8 +27,8 @@ numBoxSize: if is less than the number of powers of 2 that number will be used c
    + A: Normalize measure and save
         
 
-Output:
--------
+### Output:
+
 t.[inputFile]
 The first line are labels, box size, log box size and q requested in [qFile]  
 The first two columns are box size and Log box size used in estimations and the following columns are
@@ -48,11 +48,21 @@ are the coeficients of determination of the linear regresions for each of the pr
 
 
 
-To do:
-Add MLE following 
-﻿Newman, M. E. J. 2005. Power laws, Pareto distributions and Zipf’s law. Contemporary Physics 46:323-351.
+#### To do:
+
+* Add MLE ﻿to estimate the power laws following Newman, M. E. J. 2005. Power laws, Pareto distributions and Zipf’s law. Contemporary Physics 46:323-351.
+
+* 1 dimension and quasi 1 dimension estimation is not implemented but it should be very easy to add it
+
+* 2 versions of the function multifractalSBA exist that are identical but with different outputs, they must be unified
+
+* The method for RAD (Rank abundance distribution) multifractal estimation is not well documented 
 
 
 
-[1]Chhabra, Meneveau, Jensen & Sreenivasan, Phys.Rev.A 40,5284 (1989)
-[2]Saravia LA, Giorgi A, Momo FR (2012) Multifractal growth in periphyton communities. Oikos 0: 0.
+### References 
+
+1. Chhabra, Meneveau, Jensen & Sreenivasan, Phys.Rev.A 40,5284 (1989)
+
+2. Saravia LA, Giorgi A, Momo F (2012) Multifractal growth in periphyton communities. Oikos 121: 1810–1820. doi:10.1111/j.1600-0706.2011.20423.x.
+
