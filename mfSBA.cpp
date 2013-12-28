@@ -38,7 +38,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	simplmat <int> boxIni;
 	simplmat <int> boxFin;
 	
-	double sumAlphaQ, sumFQ,cnt,qT,piQT,piHatT,tauQT,cover=0;;
+	double sumAlphaQ, sumFQ,cnt,qT,piQT,piHatT,tauQT;
 
 	int  boxSize, iq, i, iRow, iCol, ix, iy, qNum, xDim, yDim;
 	int  yResto=0,xResto=0,actBoxSize=0;
@@ -53,7 +53,6 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	for(iy=0; iy<yDim; iy++)
 		for(ix=0; ix<xDim; ix++)
 			cnt+=pixval(ix,iy);
-	cover = cnt/(xDim*yDim);
 
     if(toupper(normalize)=='S')
     {
@@ -78,24 +77,6 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	
 	if( maxBoxSize > yDim/2 || maxBoxSize > xDim/2  )
 		maxBoxSize = (xDim<yDim ? xDim : yDim)/2;
-
-/*  Calculo de boxes con intervalo uniforme en escala decimal
-
-	int numBoxSizes = maxBoxSize/deltaBoxSize;
-	box.resize(numBoxSizes);
-	box(0)= minBoxSize;
-	for(i=1; i<numBoxSizes; i++)
-	{
-		box(i)=box(i-1)+deltaBoxSize;
-		if(box(i) > maxBoxSize )
-		{
-			numBoxSizes = i;
-			break;
-		}
-		
-	}
-
-*/	
 
 //
 //	Calculo de boxes con intevalo constante en escala logaritmica
@@ -231,7 +212,6 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 					tauQT=log10(piQT);
 				else
 				{
-					//cerr << "WARNING distribution is sparse cover=" << cover*100 << endl;
 					goto AFTERSUM;
 				}
 			
@@ -389,6 +369,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 				<< rt*rt << "\t" << ra*ra << "\t" << rf*rf << "\t"
 				<< sdbt  << "\t" << sdba << "\t" << sdbf << endl;
 	}
+	return(1);
 }
 
 
@@ -411,7 +392,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	simplmat <int> boxIni;
 	simplmat <int> boxFin;
 	
-	double sumAlphaQ, sumFQ,cnt,qT,piQT,piHatT,tauQT,cover=0;
+	double sumAlphaQ, sumFQ,cnt,qT,piQT,piHatT,tauQT;
 
 	int  boxSize, iq, i, iRow, iCol, ix, iy, qNum, xDim, yDim;
 	int  actBoxSize=0,yResto=0,xResto=0;
@@ -426,7 +407,6 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	for(iy=0; iy<yDim; iy++)
 		for(ix=0; ix<xDim; ix++)
 			cnt+=pixval(ix,iy);
-	cover = cnt/(xDim*yDim);
 
     if(toupper(normalize)=='S')
     {
@@ -451,27 +431,6 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 
 	if( maxBoxSize > yDim/2 || maxBoxSize > xDim/2  )
 		maxBoxSize = (xDim<yDim ? xDim : yDim)/2;
-
-/*  
-//
-//  Calculo de boxes con intervalo uniforme en escala decimal	
-//
-
-	int numBoxSizes = maxBoxSize/deltaBoxSize;
-	box.resize(numBoxSizes);
-	box(0)= minBoxSize;
-	for(i=1; i<numBoxSizes; i++)
-	{
-		box(i)=box(i-1)+deltaBoxSize;
-		if(box(i) > maxBoxSize )
-		{
-			numBoxSizes = i;
-			break;
-		}
-		
-	}
-
-*/
 
 //
 //	Calculo de boxes con intervalo constante en escala logaritmica
@@ -606,7 +565,6 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 					tauQT=log10(piQT);
 				else
 				{
-					// cerr << "WARNING distribution is sparse cover=" << cover*100 << endl;
 					goto AFTERSUM;
 				}
 		

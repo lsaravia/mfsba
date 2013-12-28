@@ -60,7 +60,7 @@ int RWFile::WriteIdrisi( const char * fname, simplmat<float>& data)
 	//
     // Encuentra Maximo y minimo
     //
-	int dy,dx;
+	uint dy,dx;
 	float max=0,min=0;
 	for(dy=0;dy<DimY; dy++)
 		for(dx=0;dx<DimX; dx++)
@@ -156,7 +156,7 @@ int RWFile::WriteIdrisi( const char * fname, simplmat<int>& data)
 	
 //	int * f = data.pointer() ;
 	
-	int dy,dx,eint=0;
+	uint dy,dx,eint=0;
 	for(dy=0;dy<DimY; dy++)
 		for(dx=0;dx<DimX; dx++)
 		{

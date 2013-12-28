@@ -15,13 +15,12 @@ X11LIBS=-L$(X11BASE)/lib -lX11
 
 SDLDEFS = -D__XWIN__
 
-I_DIRS=-I../fortify -I.. -I../../randlib/src
+I_DIRS=-I../../randlib/src
 #P_DEFS=-DGRAPHICS -DPERIODIC_BOUNDARY
 
-#CFLAGS = -O3 -Wall -Ic:/cpp/fortify -Ic:/cpp/canew -DGRAPHICS -DFORTIFY -fexternal-templates 
 CXXFLAGS = -g -Wall $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 
-O = mainMfSBArnz.o mfSBA.o RWFile.o randomizations.o linpack.o randlib.o com.o
+O = mainMfSBArnz.o mfSBA.o RWFile.o randomizations.o randlib.o com.o linpack.o
 
 L = -lm -ltiff
 
@@ -35,11 +34,11 @@ clean:
 # DEPENDENCIES
 all:
 
-linpack.o : linpack.c 
+randlib.o: randlib.c
 
-randlib.o : randlib.c 
+com.o: com.c
 
-com.o : com.c 
+linpack.o: linpack.c
 
 RWFile.o: RWFile.cpp RWFile.h
 

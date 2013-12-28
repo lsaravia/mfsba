@@ -1,6 +1,6 @@
 .PHONY : clean
 
-vpath_src=.. ../../randlib/src 
+#vpath_src=.. ../../randlib/src 
 vpath %.c    $(vpath_src)
 vpath %.cpp  $(vpath_src)
 vpath %.hpp  $(vpath_src)

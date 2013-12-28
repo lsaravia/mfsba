@@ -3,7 +3,7 @@
 #include "mf.h"
 #include "RWFile.h"
 #include "Randomizations.h"
-#include "Spectral.h"
+//#include "Spectral.h"
 #include <stdio.h>
 
 int CalcRandomizationMfSBAEnvelope(	const char * inFile, const char * outFile, simplmat <double> &q,const int numSimul, const double probConf=0.05);

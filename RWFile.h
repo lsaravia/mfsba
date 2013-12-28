@@ -129,7 +129,9 @@ template <class Type> int RWFile::WriteMapXY(const char * fname, simplmat<Type>&
     		}
     	break;
 	}
+	return(1);
 }
+
 
 //
 // Convierte una matriz tipo sed a un vector de coordenadas
@@ -163,7 +165,9 @@ template <class Type> int RWFile::Conv2XY(simplmat<Type>& data,simplmat<Type>& o
 				t++;
 			}
 		}
+	return(1);
 }
+
 
 
 
@@ -298,7 +302,7 @@ template <class Type> int RWFile::ReadSeed(const char * fname,simplmat<Type>& da
 
 template <class Type> int RWFile::WriteSeed(const char * fname,simplmat<Type>& data, char * dataType)
 {
-	int i,j,dx,dy;
+	uint i,j,dx,dy;
 	bool privez=false;
 
 	// Esta alreves simplmat= (row,col) y yo use siempre (col,row) ==> x=rows y=cols
@@ -792,6 +796,7 @@ template <class Type> int RWFile::ReadTiff(const char * fname, simplmat<Type>& d
 	}
 
 	TIFFClose(in);
+	return(1);
 }
 #else  // ReadTiff
 
