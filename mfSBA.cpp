@@ -274,9 +274,9 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	fFileName+= outFile;
 	ofstream fFile(fFileName.c_str());
 
-	tFile << "Box Size" << "\t" << "Log Box";
-	aFile << "Box Size" << "\t" << "Log Box";
-	fFile << "Box Size" << "\t" << "Log Box";
+	tFile << "BoxSize" << "\t" << "LogBox";
+	aFile << "BoxSize" << "\t" << "LogBox";
+	fFile << "BoxSize" << "\t" << "LogBox";
 	for(i=0;i<qNum;i++)
 	{
 		tFile << "\t" << q(i);
