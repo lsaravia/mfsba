@@ -1,6 +1,6 @@
 .PHONY : clean
 
-vpath_src=.. ../../randlib/src  
+vpath_src=..   
 vpath %.c    $(vpath_src)
 vpath %.cpp  $(vpath_src)
 vpath %.hpp  $(vpath_src)
@@ -15,12 +15,13 @@ X11LIBS=-L$(X11BASE)/lib -lX11
 
 SDLDEFS = -D__XWIN__
 
-I_DIRS=-I../../randlib/src
+#I_DIRS=-I../../randlib/src
 #P_DEFS=-DGRAPHICS -DPERIODIC_BOUNDARY
 
 CXXFLAGS = -g -Wall $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 
-O = mainMfSBArnz.o mfSBA.o RWFile.o randomizations.o randlib.o com.o linpack.o
+# O = mainMfSBArnz.o mfSBA.o RWFile.o randomizations.o randlib.o com.o linpack.o
+O = mainMfSBArnz.o mfSBA.o RWFile.o randomizations.o 
 
 L = -lm -ltiff
 
@@ -34,11 +35,6 @@ clean:
 # DEPENDENCIES
 all:
 
-randlib.o: randlib.c
-
-com.o: com.c
-
-linpack.o: linpack.c
 
 RWFile.o: RWFile.cpp RWFile.h
 

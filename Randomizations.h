@@ -21,13 +21,13 @@ class R250  : Ranf1
 //		int seed = static_cast<long>(time(0));
 //		setall(seed,seed+1);
 		};
-	int operator()(int num) const
+	int operator()(const int &num) 
         {
         	return (int64() % (num));
 //          return ignuin(0,num-1);
         }
 
-	double operator()() const
+	double operator()() 
         {
 			return doub(); 
 //	        return ranf();

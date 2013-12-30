@@ -12,7 +12,7 @@ description is in the file mfSBA_README.
 
 *mfSBArnz* estimate the Dq spectrun and randomize the original image N times to 
 calculate a confidence interval to test the hipothesis that the original distribution
-was random. It uses an old random number generator library called randlib.c so if you really want to compile this program leave an issue on github and I'll send you the library (or try to change it).
+was random. 
 
 *multiSpeciesSBA* estimates the multifractal spectra of a 2D species distribution assuming that each position is one individual and that each value represents a different specie.
 
@@ -26,7 +26,7 @@ b4-991008bio.sed/tif  are examples from the paper of 2D biomass distributions to
 
 q21.sed is a file with q values used to estimate spectra.
 
-Please leave an Issue on github if you have trouble.
+Please leave an Issue on github if you have some trouble.
 
 License
 =======
