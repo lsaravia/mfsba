@@ -153,6 +153,7 @@ plotDqFit <- function(fname,qname)
 {
   zq <- read.table(fname, sep="\t",header=T)
   cna <- read_sed(qname)
+  q <-t(cna)
   zq0 <- reshape(zq, timevar="q",times=q,v.names=c("logTr"),
                  varying=list(3:length(names(zq))),
                  direction="long")
