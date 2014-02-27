@@ -57,8 +57,12 @@ calcDq_mfSBA <- function(fname,parms,recalc=FALSE)
     syst.txt <- paste("./mfSBA ",fname, parms)
     system(syst.txt)
     }
-  pp <- read.table(sname, header=T)
-
+  pp <- read.delim(sname, header=T)
+  
+  for(nc in 1:ncol(pp)){
+    if( class(pp[,nc ])=="factor") pp[,nc]<-as.numeric(as.character(pp[,nc])) 
+  }
+  
   pp$Dq  <- with(pp,ifelse(q==1,alfa,Tau/(q-1)))
   pp$SD.Dq  <- with(pp,ifelse(q==1,SD.alfa,abs(SD.Tau/(q-1))))
   pp$R.Dq <- with(pp,ifelse(q==1,R.alfa,R.Tau))
@@ -83,7 +87,11 @@ calcDq_multiSBA <- function(fname,parms,recalc=FALSE)
     syst.txt <- paste("./multiSpeciesSBA ",fname, parms)
     system(syst.txt)
   }
-  pp <- read.table(sname, header=T)
+  pp <- read.delim(sname, header=T)
+  
+  for(nc in 1:ncol(pp)){
+    if( class(pp[,nc ])=="factor") pp[,nc]<-as.numeric(as.character(pp[,nc])) 
+  }
   
   pp$Dq  <- with(pp,ifelse(q==1,alfa,Tau/(q-1)))
   pp$SD.Dq  <- with(pp,ifelse(q==1,SD.alfa,abs(SD.Tau/(q-1))))
@@ -168,7 +176,7 @@ plotDqFit <- function(fname,qname)
   trellis.par.set(superpose.line=list(lty=3))
   
   #show.settings()
-  
+  if(names(zq1)[2]=="LogBox") names(zq1)[2]<-"Log.Box"
   print(xyplot(logTr~Log.Box , data =zq1, groups=q, type=c("r","p"), scales=list(tck=-1), 
                #main=list(wtitle,cex=0.9),
                auto.key=list(space = "right",title=expression(italic("q")),cex.title=.7, points=TRUE,cex=.7),

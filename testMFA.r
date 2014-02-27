@@ -1,16 +1,18 @@
 rm(list = ls())
 
-setwd("~/Dropbox/cpp/SpatialAnalysis/mfsba")
+# change this to the folder wich contains mfSBA
+#
+setwd("/cpp/mfsba")
 
 source('Fun_MFA.r')
 
-dq <- calcDq_mfSBA("rnd256.sed","q21.sed 2 512 20 S")
+dq <- calcDq_mfSBA("rnd256.sed","q21.sed 2 512 20 S",F)
 
 dq$Site <- "Random" 
 
 hist(dq$R.Dq)
 
-dq1<- calcDq_mfSBA("b4-991008bio.sed","q21.sed 2 512 20 S")
+dq1<- calcDq_mfSBA("b4-991008bio.sed","q21.sed 2 512 20 S",F)
 
 hist(dq1$R.Dq)
 
@@ -26,7 +28,8 @@ gp <- ggplot(dq, aes(x=q, y=Dq, color=Site)) +
   geom_point()
 gp
 
-
+# A publication quality graph requires lattice & Hmisc packages
+#
 plot_DqCI(dq)
 
 plot_sed_image("t64-0100.sed","Neutral Multi species 2D distribution")
