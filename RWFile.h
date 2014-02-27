@@ -20,9 +20,8 @@
 #include <iomanip>
 #include <string.h>
 #include "smattpl.h"
-#ifndef __BORLANDC__
 #include "tiffio.h"
-#endif
+
 using namespace std;
 
 class RWFile
@@ -302,7 +301,7 @@ template <class Type> int RWFile::ReadSeed(const char * fname,simplmat<Type>& da
 
 template <class Type> int RWFile::WriteSeed(const char * fname,simplmat<Type>& data, char * dataType)
 {
-	uint i,j,dx,dy;
+	unsigned int i,j,dx,dy;
 	bool privez=false;
 
 	// Esta alreves simplmat= (row,col) y yo use siempre (col,row) ==> x=rows y=cols
