@@ -1,16 +1,13 @@
-Saravia LA, Giorgi A, Momo F (2012) Multifractal growth in periphyton communities. Oikos 121: 1810–1820. doi:10.1111/j.1600-0706.2011.20423.x.
+Saravia LA (2014) mfSBA: Multifractal analysis of spatial patterns in ecological communities [v1; ref status: approved with reservations 2, http://f1000r.es/2p4]. F1000Research 3: 14. doi: 10.12688/f1000research.3-14.v1.
 
-@article{Saravia2012a,
-abstract = {Periphyton is an aquatic community composed by algae, bacteria, fungi, and other microorganisms that can develop a complex architecture comparable to tropical forests. We analyzed the spatial pattern of a periphyton community along a succession developed in experimental tanks. Our aim was to identify regularities that may help us to explain the patchiness of this community. Therefore, we estimated the spatial pattern of periphyton biomass using a non-destructive image analysis technique to obtain a temporal series of the spatial distribution. These were analyzed using multifractal techniques. Multifractals are analogous to fractals but they look at the geometry of quantities instead of the geometry of pattern. To use these techniques the object of study must show scale invariance and then can be characterized by a spectra of fractal dimensions. Selforganization describes the evolution of complex structures that emerge spontaneously driven internally by variations of the system itself. The spatial distribution of biomass showed scale invariance at all stages of succession and as the periphyton developed in a homogeneous landscape, in a demonstration of self-organized behavior. Self-organization to a critical state (SOC) is presented in the complex systems literature as a general explanation for scale invariance in nature. SOC requires a mechanism where the history of past events in a place influence the actual dynamics, this was termed ecological memory. The scale invariance was found from the very beginning of the succession thus selforganized criticality is a very improbable explanation for the pattern because there would be not enough time for the build up of ecological memory. Positive interactions between algae and bacteria, and the existence of different spatial scales of colonization and growth are the likely causes of this pattern. Our work is a demonstration of how large scale patterns emerge from local biotic interactions.},
-author = {Saravia, Leonardo Ariel and Giorgi, Adonis and Momo, Fernando},
-doi = {10.1111/j.1600-0706.2011.20423.x},
-issn = {00301299},
-journal = {Oikos},
-month = jun,
-number = {11},
-pages = {1810--1820},
-title = {{Multifractal growth in periphyton communities}},
-url = {http://doi.wiley.com/10.1111/j.1600-0706.2011.20423.x},
-volume = {121},
-year = {2012}
+@article{Saravia2014,
+abstract = {Multifractals have been applied to characterize complex communities in a spatial context. They were developed for nonlinear systems and are particularly suited to capture multiplicative processes observed in ecological systems. Multifractals characterize variability in a scale-independent way within an experimental range. I have developed an open-source software package to estimate multifractals using a box-counting algorithm (available from https://github.com/lsaravia/mfsba and permenatly available at doi: 10.5281/zenodo.7659). The software is specially designed for two dimensional (2D) images such as the ones obtained from remote sensing, but other 2D data types can also be analyzed. Additionally I developed a new metric to analyze multispecies spatial patterns with multifractals: spatial rank surface, which is included in the software.},
+author = {Saravia, Leonardo A},
+doi = {10.12688/f1000research.3-14.v1},
+journal = {F1000Research},
+pages = {14},
+title = {{mfSBA: Multifractal analysis of spatial patterns in ecological communities [v1; ref status: approved with reservations 2, http://f1000r.es/2p4]}},
+url = {http://f1000research.com/articles/3-14/v1},
+volume = {3},
+year = {2014}
 }
