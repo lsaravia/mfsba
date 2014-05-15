@@ -694,3 +694,75 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	}
 	return(1);
 }
+
+
+int loglogRegress(simplmat <double> &q, char * outFile,int numBoxSizes&, simplmat <double> &box,
+	simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ, char type,char * outFile, char * ident)
+{
+	int qNum = q.getRows();
+	type = toupper(type); // F = Full output
+							// R = Resumed output 
+
+
+	// Regression of the log - log variables
+	//
+	//
+	for(i=0; i<qNum; i++)
+	{
+		double sumx=0,
+			sumyt = 0,
+			sumya = 0,
+			sumyf = 0,
+			sumxyt = 0,
+			sumxya = 0,
+			sumxyf = 0,
+			sumxsq = 0,
+			sumysqt = 0,
+			sumysqa = 0,
+			sumysqf = 0,
+			sdbt=0,
+			sdba=0,
+			sdbf=0;
+
+		for(boxSize=0; boxSize<numBoxSizes; boxSize++)
+		{
+			double x = log10(box(boxSize));
+			double yt = tauQ(boxSize,i);
+			double ya = alphaQ(boxSize,i);
+			double yf = fQ(boxSize,i);
+			
+			sumx += x;
+			sumyt += yt;
+			sumya += ya;
+			sumyf += yf;
+			sumxyt += x * yt;
+			sumxya += x * ya;
+			sumxyf += x * yf;
+			sumxsq += x * x;
+			sumysqt += yt * yt;
+			sumysqa += ya * ya;
+			sumysqf += yf * yf;
+		}
+		double xbar  = sumx/numBoxSizes ;
+		double ybart = sumyt/numBoxSizes ;
+		double ybara = sumya/numBoxSizes ;
+		double ybarf = sumyf/numBoxSizes ;
+	
+		double bt = (sumxyt - numBoxSizes *xbar*ybart)/(sumxsq - numBoxSizes *xbar*xbar);
+		double ba = (sumxya - numBoxSizes *xbar*ybara)/(sumxsq - numBoxSizes *xbar*xbar);
+		double bf = (sumxyf - numBoxSizes *xbar*ybarf)/(sumxsq - numBoxSizes *xbar*xbar);
+	//	a = ybar - (b*xbar);
+		double rt = (sumxyt - numBoxSizes *xbar*ybart)/sqrt((sumxsq - numBoxSizes  * xbar * xbar) * (sumysqt - numBoxSizes *ybart*ybart));
+		double ra = (sumxya - numBoxSizes *xbar*ybara)/sqrt((sumxsq - numBoxSizes  * xbar * xbar) * (sumysqa - numBoxSizes *ybara*ybara));
+		double rf = (sumxyf - numBoxSizes *xbar*ybarf)/sqrt((sumxsq - numBoxSizes  * xbar * xbar) * (sumysqf - numBoxSizes *ybarf*ybarf));
+		if( numBoxSizes  > 4 )
+		{
+			sdbt = sqrt((1-rt*rt)*(sumysqt-numBoxSizes*ybart*ybart))/((numBoxSizes -4)*(sumxsq-numBoxSizes *xbar*xbar));
+			sdba = sqrt((1-ra*ra)*(sumysqa-numBoxSizes*ybara*ybara))/((numBoxSizes -4)*(sumxsq-numBoxSizes *xbar*xbar));
+			sdbf = sqrt((1-rf*rf)*(sumysqf-numBoxSizes*ybarf*ybarf))/((numBoxSizes -4)*(sumxsq-numBoxSizes *xbar*xbar));
+		}
+		fb << ident << "\t" << q(i) << "\t" << bt << "\t" << ba << "\t" << bf << "\t"
+				<< rt*rt << "\t" << ra*ra << "\t" << rf*rf << "\t"
+				<< sdbt  << "\t" << sdba << "\t" << sdbf << endl;
+
+}
