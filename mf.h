@@ -47,5 +47,9 @@ struct outRegress {
 int loglogRegress(simplmat <double> &q,int &numBoxSizes, simplmat <double> &box,
     simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ, simplmat <outRegress> &oR);
 
+int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBoxSize, 
+    int &maxBoxSize, int &numBoxSizes, char &normalize,
+    simplmat <double> &box, simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ);
+
 #endif  // MF_H
 

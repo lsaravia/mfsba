@@ -1,6 +1,6 @@
 rm(list = ls())
 
-# change this to the folder wich contains mfSBA
+# change to the folder wich contains mfSBA
 #
 setwd("/cpp/mfsba")
 
