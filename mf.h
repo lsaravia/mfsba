@@ -38,5 +38,14 @@ int PatchStats(simplmat <double> &data,int numSpecies, const char * outFile,cons
 
 int MultispeciesReordering(simplmat <double> &data, simplmat <double> &newdata );
 
+struct outRegress {
+
+    double bt,ba,bf,rt2,ra2,rf2,sdbt,sdba,sdbf;
+    outRegress():bt(0),ba(0),bf(0),rt2(0),ra2(0),rf2(0),sdbt(0),sdba(0),sdbf(0){};
+};
+
+int loglogRegress(simplmat <double> &q,int &numBoxSizes, simplmat <double> &box,
+    simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ, simplmat <outRegress> &oR);
+
 #endif  // MF_H
 
