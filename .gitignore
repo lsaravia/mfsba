@@ -3,3 +3,6 @@
 *.gpr
 *.gdt
 *.exe
+*.ods
+*t64-0100*
+*.sublime*

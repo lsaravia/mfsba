@@ -19,9 +19,9 @@ int main(int argc, char * argv[])
 		cerr << "Usage: mf inputFile qFile minBox maxBox numBoxSizes option" << endl
         	 << "       option N: Not normalize measure" << endl
         	 << "              S: Normalize measure" << endl
-        	 << "              D: ADD 1 and normalize measure" << endl
-        	 << "              A: Save the reordered distribution" << endl; 
-        	 
+        	 << "              A: Save the reordered distribution" << endl 
+			 << "              E: Use species number to compute dimensions, the default is to use ranks" << endl	        	 
+			 << "                 This option could be combined with the others eg NE" << endl;	        	 
         
 		exit(1);
 	}
@@ -52,14 +52,14 @@ int main(int argc, char * argv[])
 	int maxBox = atoi(argv[4]);
 	int deltaBox = atoi(argv[5]);
     
-    char norm=argv[6][0];
+    string opt=argv[6];
     	
 	simplmat <double> newdata(data);	
 
 	if(MultispeciesReordering(data,newdata))
-		MultifractalSBA(newdata, q,argv[1] ,minBox, maxBox, deltaBox, norm);
+		MultifractalSBA(newdata, q,argv[1] ,minBox, maxBox, deltaBox, opt[0]);
 
-    if(argv[6][0]=='A')
+    if(opt[0]=='A')
     {
 	    string::size_type pos=0;
 		if( (pos=fname.find(".")) == string::npos )

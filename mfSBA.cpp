@@ -20,6 +20,9 @@
 #include <string>
 #include "RWFile.h"
 #include "mf.h"
+#include <vector>
+#include <set>
+
 using namespace std;
 
 // 	Q: Valores de Q posibles 
@@ -34,9 +37,9 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	simplmat <double> alphaQ;
 	simplmat <double> fQ;
 	
-	
+	// OJO SOLAMENTE DE PRUEBA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! winMovSum
 	standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
-    									box,tauQ, alphaQ, fQ);
+    									box,tauQ, alphaQ, fQ, &winMovNumSp);
 
 	int qNum = q.getRows();
 	int i,boxSize;
@@ -121,7 +124,7 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	simplmat <double> fQ;
 
 	standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
-    									box,tauQ, alphaQ, fQ);
+    									box,tauQ, alphaQ, fQ, &winMovSum);
 
 	int qNum = q.getRows();
 	ofstream fb;
@@ -232,9 +235,34 @@ int loglogRegress(simplmat <double> &q,int &numBoxSizes, simplmat <double> &box,
 	return(1);
 }
 
+double winMovSum(simplmat <double> &pixval,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd)
+{
+	double cnt=0;
+	for(int iy=rowIni; iy<rowEnd; iy++)
+		for(int ix=colIni; ix<colEnd; ix++)
+			cnt+=pixval(ix,iy);
+	return(cnt);
+}
+
+double winMovNumSp(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd)
+{
+   	set<int> distinct_container;
+
+	for(auto curr_val = px.pointer(), end = px.pointer()+px.getRows()*px.getCols(); // no need to call v.end() multiple times
+       curr_val != end;
+       ++curr_val)
+   	{
+   		//curr_int = static_cast <int>(*curr_val)
+	    distinct_container.insert(static_cast <int>(*curr_val));
+   	}
+
+   	return distinct_container.size();
+}
+
 int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBoxSize, 
     int &maxBoxSize, int &numBoxSizes, char &normalize,
-    simplmat <double> &box, simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ)
+    simplmat <double> &box, simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ,
+    double (*winMov)(simplmat <double> &pixval,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd))
 {
 	double sumAlphaQ, sumFQ,cnt,qT,piQT,piHatT,tauQT;
 
@@ -248,28 +276,18 @@ int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBox
 	xDim = pixval.getRows();
 	yDim = pixval.getCols();
 
-	cnt=0;
+	cnt=0.0;
    	normalize = toupper(normalize);
 
-   	if(normalize=='S' || normalize=='D')
+   	if(normalize=='S') 
    	{
 		for(iy=0; iy<yDim; iy++)
 			for(ix=0; ix<xDim; ix++)
 				cnt+=pixval(ix,iy);
 	
-	    if(normalize=='S')
-	    {
-			for(iy=0; iy<yDim; iy++)
-				for(ix=0; ix<xDim; ix++)
-					pixval(ix,iy)/=cnt;
-		}		
-		else if(normalize=='D')
-		{
-			cnt+=xDim*yDim;
-			for(iy=0; iy<yDim; iy++)
-				for(ix=0; ix<xDim; ix++)
-					pixval(ix,iy)=(pixval(ix,iy)+1)/cnt;					
-		}
+		for(iy=0; iy<yDim; iy++)
+			for(ix=0; ix<xDim; ix++)
+				pixval(ix,iy)/=cnt;
 	}
 
 	
@@ -387,24 +405,20 @@ int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBox
 			{
 				piQT=0;
 				tauQT=0;
+				sumAlphaQ=0;
+				sumFQ=0;
+				piHatT=0;
 				
 				for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow+=actBoxSize )
 					for(iCol=boxIni(rep,0); iCol <= boxFin(rep,0)-actBoxSize; iCol+=actBoxSize )
 					{
-						cnt = 0.0;
-
 //						window examination
-						for(iy=iRow; iy<iRow+actBoxSize; iy++)
-							for(ix=iCol; ix<iCol+actBoxSize; ix++)
-								cnt+=pixval(ix,iy);
+						cnt = winMov(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize);
 						if( cnt>0.0 )
 							piQT+=pow(cnt,qT);
 						
 					}
 				
-				sumAlphaQ=0;
-				sumFQ=0;
-				piHatT=0;
 
 				if( piQT > 0.0 )
 					tauQT=log10(piQT);
@@ -420,12 +434,7 @@ int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBox
 					for(iCol=boxIni(rep,0); iCol <=boxFin(rep,0)-actBoxSize; iCol +=actBoxSize )
 					{
 
-						cnt=0.0;
-
-						//	window examination
-						for(iy=iRow; iy<iRow+actBoxSize; iy++)
-							for(ix=iCol; ix<iCol+actBoxSize; ix++)
-								cnt+=pixval(ix,iy);
+						cnt = winMov(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize);
 
 						if( cnt>0.0 )
 						{

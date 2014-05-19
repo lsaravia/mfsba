@@ -49,7 +49,12 @@ int loglogRegress(simplmat <double> &q,int &numBoxSizes, simplmat <double> &box,
 
 int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBoxSize, 
     int &maxBoxSize, int &numBoxSizes, char &normalize,
-    simplmat <double> &box, simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ);
+    simplmat <double> &box, simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ,
+    double (*winMov)(simplmat <double> &pixval,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd)
+);
+
+double winMovSum(simplmat <double> &pixval,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd);
+double winMovNumSp(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd);
 
 #endif  // MF_H
 

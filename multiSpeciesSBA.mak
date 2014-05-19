@@ -19,7 +19,7 @@ I_DIRS=-I.. -I../../randlib/src
 #P_DEFS=-DGRAPHICS -DPERIODIC_BOUNDARY
 
 #CFLAGS = -O3 -Wall -Ic:/cpp/fortify -Ic:/cpp/canew -DGRAPHICS -DFORTIFY -fexternal-templates 
-CXXFLAGS = -g -Wall $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
+CXXFLAGS = -g -Wall -std=gnu++0x $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 
 O = mainMultispeciesMf.o mfSBA.o RWFile.o multiSpecies.o
 

@@ -16,8 +16,7 @@ int main(int argc, char * argv[])
 		cerr << "Usage: mf inputFile qFile minBox maxBox numBoxSizes option" << endl
         	 << "       option N: Not normalize measure" << endl
         	 << "              S: Normalize measure" << endl
-        	 << "              D: ADD 1 and normalize measure" << endl
-        	 << "              A: Normalize measure and save" << endl; 
+         	 << "              A: Normalize measure and save" << endl; 
         	 
         
 		exit(1);
