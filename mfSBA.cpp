@@ -21,7 +21,7 @@
 #include "RWFile.h"
 #include "mf.h"
 #include <vector>
-#include <set>
+#include <unordered_set>
 
 using namespace std;
 
@@ -37,9 +37,12 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	simplmat <double> alphaQ;
 	simplmat <double> fQ;
 	
-	// OJO SOLAMENTE DE PRUEBA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! winMovSum
-	standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
+	if(normalize=='E')
+		standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
     									box,tauQ, alphaQ, fQ, &winMovNumSp);
+	else
+		standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
+    									box,tauQ, alphaQ, fQ, &winMovSum);
 
 	int qNum = q.getRows();
 	int i,boxSize;
@@ -246,18 +249,17 @@ double winMovSum(simplmat <double> &pixval,const int &rowIni,const int &rowEnd,c
 
 double winMovNumSp(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd)
 {
-   	set<int> distinct_container;
+   	unordered_set<int> distinct_container;
 
-	for(auto curr_val = px.pointer(), end = px.pointer()+px.getRows()*px.getCols(); // no need to call v.end() multiple times
-       curr_val != end;
-       ++curr_val)
-   	{
-   		//curr_int = static_cast <int>(*curr_val)
-	    distinct_container.insert(static_cast <int>(*curr_val));
-   	}
+	for(int iy=rowIni; iy<rowEnd; iy++)
+		for(int ix=colIni; ix<colEnd; ix++)
+	   	{
+   			int curr_int = static_cast <int>(px(ix,iy));
+	    	distinct_container.insert(curr_int);
+   		}
 
    	return distinct_container.size();
-}
+} 
 
 int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBoxSize, 
     int &maxBoxSize, int &numBoxSizes, char &normalize,

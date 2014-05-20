@@ -9,19 +9,19 @@ int main(int argc, char * argv[])
 
 	if( argc < 6)
 	{
-		cerr << "Multifractal estimation of multispecies 2D distributions" << endl;
-		cerr << "Takes the most abundant species and assign it the number 1" << endl;
-		cerr << "the following abundant species and assign it the number 2" << endl;
-		cerr << "and the same for all remaining species" << endl;
-		cerr << "The Dq,F(alpha),Alpha estimation use box counting and the canonical method" << endl;
-		cerr << "Chhabra, Meneveau, Jensen & Sreenivasan, Phys.Rev.A 40,5284 (1989)" << endl << endl;
+		cerr << "-------------------------------------------------------" << endl 
+			<< "Multifractal estimation of multispecies 2D distributions" << endl
+			 << "Using species rank surface (SRS) see " << endl 
+			 << "http://f1000research.com/articles/3-14/v2" << endl 
+			 << "The Dq,F(alpha),Alpha estimation use box counting and the canonical method" << endl
+			 << "Chhabra, Meneveau, Jensen & Sreenivasan, Phys.Rev.A 40,5284 (1989)" << endl << endl;
 
 		cerr << "Usage: mf inputFile qFile minBox maxBox numBoxSizes option" << endl
-        	 << "       option N: Not normalize measure" << endl
+        	 << "       option N: Not normalize measure use SRS" << endl
         	 << "              S: Normalize measure" << endl
         	 << "              A: Save the reordered distribution" << endl 
-			 << "              E: Use species number to compute dimensions, the default is to use ranks" << endl	        	 
-			 << "                 This option could be combined with the others eg NE" << endl;	        	 
+			 << "              E: Use species number to compute dimensions" << endl	        	 
+			 << "                 This option implies N" << endl;	        	 
         
 		exit(1);
 	}
