@@ -405,11 +405,11 @@ int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBox
 
 			for(int rep=0;rep<numRep;rep++)
 			{
-				piQT=0;
-				tauQT=0;
-				sumAlphaQ=0;
-				sumFQ=0;
-				piHatT=0;
+				piQT=0.0;
+				tauQT=0.0;
+				sumAlphaQ=0.0;
+				sumFQ=0.0;
+				piHatT=0.0;
 				
 				for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow+=actBoxSize )
 					for(iCol=boxIni(rep,0); iCol <= boxFin(rep,0)-actBoxSize; iCol+=actBoxSize )
@@ -423,31 +423,27 @@ int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBox
 				
 
 				if( piQT > 0.0 )
-					tauQT=log10(piQT);
-				else
 				{
-					goto AFTERSUM;
-				}
-			
-				// To do AlphaQ and FQ
+					tauQT=log10(piQT);
+					// To do AlphaQ and FQ
 
-				//	window movement
-				for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow +=actBoxSize )
-					for(iCol=boxIni(rep,0); iCol <=boxFin(rep,0)-actBoxSize; iCol +=actBoxSize )
-					{
-
-						cnt = winMov(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize);
-
-						if( cnt>0.0 )
+					//	window movement
+					for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow +=actBoxSize )
+						for(iCol=boxIni(rep,0); iCol <=boxFin(rep,0)-actBoxSize; iCol +=actBoxSize )
 						{
-							piHatT=pow(cnt,qT)/piQT;
-							sumAlphaQ+=piHatT*log10(cnt);
-							sumFQ+=piHatT*log10(piHatT);
+
+							cnt = winMov(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize);
+
+							if( cnt>0.0 )
+							{
+								piHatT=pow(cnt,qT)/piQT;
+								sumAlphaQ+=piHatT*log10(cnt);
+								sumFQ+=piHatT*log10(piHatT);
+							}
+							
 						}
-						
-					}
-				
-				AFTERSUM:
+				}
+
 				alphaQ(boxSize,iq)+=sumAlphaQ;
 				fQ(boxSize,iq)+=sumFQ;
 				tauQ(boxSize,iq)+=tauQT;

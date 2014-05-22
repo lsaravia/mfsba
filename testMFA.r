@@ -44,6 +44,12 @@ dq$Site <- "Species Rank Surface"
 
 dq <- rbind(dq,dq1)
 
+dq1<- calcDq_multiSBA("t64-0100.sed","q21.sed 2 512 20 E",T)
+
+dq1$Site <- "Number of species"
+
+dq <- rbind(dq,dq1)
+
 gp <- ggplot(dq, aes(x=q, y=Dq, color=Site)) +
   geom_errorbar(aes(ymin=Dq-SD.Dq, ymax=Dq+SD.Dq), width=.1) +
   geom_line() +
