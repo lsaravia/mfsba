@@ -22,6 +22,7 @@
 #include "mf.h"
 #include <vector>
 #include <unordered_set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -38,8 +39,8 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	simplmat <double> fQ;
 	
 	if(normalize=='E')
-		standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
-    									box,tauQ, alphaQ, fQ, &winMovNumSp);
+		standardBoxCountSAD(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
+    									box,tauQ, alphaQ, fQ);
 	else
 		standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
     									box,tauQ, alphaQ, fQ, &winMovSum);
@@ -457,3 +458,205 @@ int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBox
 	}
 	return(1);
 }
+
+int standardBoxCountSAD(simplmat <double> &pixval,simplmat <double> &q, int &minBoxSize, 
+    int &maxBoxSize, int &numBoxSizes, char &normalize,
+    simplmat <double> &box, simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ)
+{
+	double sumAlphaQ, sumFQ,cnt,qT,piQT,piHatT,tauQT;
+
+	int  boxSize, iq, i, iRow, iCol, ix, iy, qNum, xDim, yDim;
+	int  yResto=0,xResto=0,actBoxSize=0;
+
+	simplmat <int> boxIni;
+	simplmat <int> boxFin;
+
+	qNum = q.getRows();
+	xDim = pixval.getRows();
+	yDim = pixval.getCols();
+
+	cnt=0.0;
+   	normalize = toupper(normalize);
+
+   	if(normalize=='S') 
+   	{
+		for(iy=0; iy<yDim; iy++)
+			for(ix=0; ix<xDim; ix++)
+				cnt+=pixval(ix,iy);
+	
+		for(iy=0; iy<yDim; iy++)
+			for(ix=0; ix<xDim; ix++)
+				pixval(ix,iy)/=cnt;
+	}
+
+	
+	if( maxBoxSize > yDim/2 || maxBoxSize > xDim/2  )
+		maxBoxSize = (xDim<yDim ? xDim : yDim)/2;
+
+	// Calculo de boxes como potencias de 2
+	//
+	box.resize(numBoxSizes);
+   	int finDimX=0,finDimY=0;
+
+	for(finDimX=0,i=0;finDimX<minBoxSize;finDimX=pow(2.0,i))
+    	i++;
+    int minPot=i;
+    
+	box(0)= pow(2.0,minPot);
+	for(i=1; i<numBoxSizes; i++)
+	{
+		box(i)=pow(2.0,minPot+i);
+		if( box(i)>maxBoxSize )
+		{
+			numBoxSizes = i;
+			break;
+		}
+	}
+
+	for(finDimX=0;finDimX<xDim;finDimX=pow(2.0,i))
+    	i++;
+	finDimX=pow(2.0,i-1);
+	for(finDimY=0,i=1;finDimY<yDim;finDimY=pow(2.0,i))
+    	i++;
+	finDimY=pow(2.0,i-1);
+
+	int numRep;
+
+	alphaQ.resize(numBoxSizes,qNum,0.0);
+	tauQ.resize(numBoxSizes,qNum,0.0);
+	fQ.resize(numBoxSizes,qNum,0.0);
+	boxIni.resize(4,2,0);
+	boxFin.resize(4,2,0);
+	for(iq=0;iq<qNum; iq++)
+	{
+		
+		for(boxSize=0; boxSize<numBoxSizes; boxSize++)
+		{
+			actBoxSize = box(boxSize);
+			yResto = yDim - finDimY;
+			xResto = xDim - finDimX;
+
+			boxIni.fill(0);
+			boxFin.fill(finDimX);
+			boxFin(0,1)=boxFin(1,1)=boxFin(2,1)=boxFin(3,1)=finDimY;
+			numRep=1;
+			
+			if( xResto>0 && yResto>0  )
+			{
+				numRep=4;
+				boxIni(1,0)= xResto;
+				boxIni(3,0)= xResto;
+				boxIni(2,1)= yResto;
+				boxIni(3,1)= yResto;
+				boxFin(1,0)= finDimX+xResto;
+				boxFin(3,0)= finDimX+xResto;
+				boxFin(2,1)= finDimY+yResto;
+				boxFin(3,1)= finDimY+yResto;
+
+			}
+			if( xResto>0  && yResto==0)
+			{
+				numRep=2;
+				boxIni(1,0)= xResto;
+				boxFin(1,0)= finDimX+xResto;
+			}
+			if( yResto>0  && xResto==0)
+			{
+				numRep=2;
+				boxIni(1,1)= yResto;
+				boxFin(1,1)= finDimY+yResto;
+			}
+
+			for(int rep=0;rep<numRep;rep++)
+			{
+
+				qT = q(iq);
+				piQT=0.0;
+				tauQT=0.0;
+				sumAlphaQ=0.0;
+				sumFQ=0.0;
+				piHatT=0.0;
+				int countBoxes=0;
+
+				for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow+=actBoxSize )
+					for(iCol=boxIni(rep,0); iCol <= boxFin(rep,0)-actBoxSize; iCol+=actBoxSize )
+					{
+
+						// boxes examination
+						piQT += winMovSAD(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize,qT);
+						countBoxes++;
+					}
+				// Calculates average
+				piQT /= static_cast<double>(countBoxes);
+				if( piQT > 0.0 )
+					tauQT=log10(piQT);
+
+// ONLY CALCULATES DQ
+//
+/*				if( piQT > 0.0 )
+				{
+					tauQT=log10(piQT);
+					// To do AlphaQ and FQ
+
+					//	window movement
+					for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow +=actBoxSize )
+						for(iCol=boxIni(rep,0); iCol <=boxFin(rep,0)-actBoxSize; iCol +=actBoxSize )
+						{
+
+							cnt = winMovSAD(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize);
+
+							if( cnt>0.0 )
+							{
+								piHatT=pow(cnt,qT)/piQT;
+								sumAlphaQ+=piHatT*log10(cnt);
+								sumFQ+=piHatT*log10(piHatT);
+							}
+							
+						}
+				}
+
+				alphaQ(boxSize,iq)+=sumAlphaQ;
+				fQ(boxSize,iq)+=sumFQ;
+*/
+				tauQ(boxSize,iq)+=tauQT;
+			}
+			
+			tauQ(boxSize,iq)/=static_cast<double>(numRep);
+			alphaQ(boxSize,iq)/=static_cast<double>(numRep);
+			fQ(boxSize,iq)/=static_cast<double>(numRep);
+				
+		}
+	}
+	return(1);
+}
+
+double winMovSAD(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd,const double &qT)
+{
+	double sum=0;
+	typedef unordered_map<int,unsigned int> CounterMap;
+	CounterMap counts;
+	for(int iy=rowIni; iy<rowEnd; iy++)
+		for(int ix=colIni; ix<colEnd; ix++)
+	   	{
+			int curr_int = static_cast <int>(px(ix,iy));
+
+			CounterMap::iterator i(counts.find(curr_int));
+			if (i != counts.end()){
+				i->second++;
+		   	} else {
+		    	counts[curr_int] = 1;
+		   }
+		}
+	if(qT!=1){
+		for(auto iter=counts.begin(); iter!=counts.end(); ++iter)
+		{
+			sum += pow(iter->second,qT);
+		}
+	} else {
+		for(auto iter=counts.begin(); iter!=counts.end(); ++iter)
+		{
+			sum += (iter->second) * log10(iter->second);
+		}
+	}
+	return(sum);
+} 

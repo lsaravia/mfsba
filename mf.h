@@ -53,8 +53,14 @@ int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBox
     double (*winMov)(simplmat <double> &pixval,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd)
 );
 
+int standardBoxCountSAD(simplmat <double> &pixval,simplmat <double> &q, int &minBoxSize, 
+    int &maxBoxSize, int &numBoxSizes, char &normalize,
+    simplmat <double> &box, simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ
+);
+
 double winMovSum(simplmat <double> &pixval,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd);
 double winMovNumSp(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd);
+double winMovSAD(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd,const double &qT);
 
 #endif  // MF_H
 
