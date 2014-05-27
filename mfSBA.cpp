@@ -348,10 +348,10 @@ int standardBoxCount(simplmat <double> &pixval,simplmat <double> &q, int &minBox
 		}
 	}
 
-	for(finDimX=0;finDimX<xDim;finDimX=pow(2.0,i))
+	for(finDimX=0;finDimX<=xDim;finDimX=pow(2.0,i))
     	i++;
 	finDimX=pow(2.0,i-1);
-	for(finDimY=0,i=1;finDimY<yDim;finDimY=pow(2.0,i))
+	for(finDimY=0,i=1;finDimY<=yDim;finDimY=pow(2.0,i))
     	i++;
 	finDimY=pow(2.0,i-1);
 
@@ -463,7 +463,7 @@ int standardBoxCountSAD(simplmat <double> &pixval,simplmat <double> &q, int &min
     int &maxBoxSize, int &numBoxSizes, char &normalize,
     simplmat <double> &box, simplmat <double> &tauQ, simplmat <double> &alphaQ, simplmat <double> &fQ)
 {
-	double sumAlphaQ, sumFQ,cnt,qT,piQT,piHatT,tauQT;
+	double sumAlphaQ, sumFQ,cnt,qT,piQT,tauQT;
 
 	int  boxSize, iq, i, iRow, iCol, ix, iy, qNum, xDim, yDim;
 	int  yResto=0,xResto=0,actBoxSize=0;
@@ -513,10 +513,10 @@ int standardBoxCountSAD(simplmat <double> &pixval,simplmat <double> &q, int &min
 		}
 	}
 
-	for(finDimX=0;finDimX<xDim;finDimX=pow(2.0,i))
+	for(finDimX=0;finDimX<=xDim;finDimX=pow(2.0,i))
     	i++;
 	finDimX=pow(2.0,i-1);
-	for(finDimY=0,i=1;finDimY<yDim;finDimY=pow(2.0,i))
+	for(finDimY=0,i=1;finDimY<=yDim;finDimY=pow(2.0,i))
     	i++;
 	finDimY=pow(2.0,i-1);
 
@@ -575,7 +575,6 @@ int standardBoxCountSAD(simplmat <double> &pixval,simplmat <double> &q, int &min
 				tauQT=0.0;
 				sumAlphaQ=0.0;
 				sumFQ=0.0;
-				piHatT=0.0;
 				int countBoxes=0;
 
 				for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow+=actBoxSize )
@@ -583,80 +582,71 @@ int standardBoxCountSAD(simplmat <double> &pixval,simplmat <double> &q, int &min
 					{
 
 						// boxes examination
-						piQT += winMovSAD(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize,qT);
+						piQT += winMovSAD(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize,qT,
+							sumAlphaQ,sumFQ);
 						countBoxes++;
 					}
 				// Calculates average
 				piQT /= static_cast<double>(countBoxes);
+				sumAlphaQ /= static_cast<double>(countBoxes);
+				sumFQ /= static_cast<double>(countBoxes);
+
 				if( piQT > 0.0 )
 					tauQT=log10(piQT);
 
-// ONLY CALCULATES DQ
-//
-/*				if( piQT > 0.0 )
-				{
-					tauQT=log10(piQT);
-					// To do AlphaQ and FQ
-
-					//	window movement
-					for(iRow=boxIni(rep,1); iRow <= boxFin(rep,1)-actBoxSize; iRow +=actBoxSize )
-						for(iCol=boxIni(rep,0); iCol <=boxFin(rep,0)-actBoxSize; iCol +=actBoxSize )
-						{
-
-							cnt = winMovSAD(pixval,iRow,iRow+actBoxSize,iCol,iCol+actBoxSize);
-
-							if( cnt>0.0 )
-							{
-								piHatT=pow(cnt,qT)/piQT;
-								sumAlphaQ+=piHatT*log10(cnt);
-								sumFQ+=piHatT*log10(piHatT);
-							}
-							
-						}
-				}
-
 				alphaQ(boxSize,iq)+=sumAlphaQ;
 				fQ(boxSize,iq)+=sumFQ;
-*/
 				tauQ(boxSize,iq)+=tauQT;
 			}
-			
-			tauQ(boxSize,iq)/=static_cast<double>(numRep);
-			alphaQ(boxSize,iq)/=static_cast<double>(numRep);
-			fQ(boxSize,iq)/=static_cast<double>(numRep);
+			// multipling by -1 because formulae have inverted signs!!!! 
+			// compare Saravia with Borda-de-Agua
+			//
+			tauQ(boxSize,iq)/=static_cast<double>(-numRep);
+			alphaQ(boxSize,iq)/=static_cast<double>(-numRep);
+			fQ(boxSize,iq)/=static_cast<double>(-numRep);
 				
 		}
 	}
 	return(1);
 }
 
-double winMovSAD(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd,const double &qT)
+// This routine assumes one individual by cell!
+//
+double winMovSAD(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd,const double &qT,
+	double &AlphaQ, double &FQ)
 {
-	double sum=0;
+	double piQT=0,sumSp=0;
 	typedef unordered_map<int,unsigned int> CounterMap;
 	CounterMap counts;
 	for(int iy=rowIni; iy<rowEnd; iy++)
 		for(int ix=colIni; ix<colEnd; ix++)
 	   	{
 			int curr_int = static_cast <int>(px(ix,iy));
-
-			CounterMap::iterator i(counts.find(curr_int));
-			if (i != counts.end()){
-				i->second++;
-		   	} else {
-		    	counts[curr_int] = 1;
+			if(curr_int!=0)
+				{
+				sumSp++;
+				CounterMap::iterator i(counts.find(curr_int));
+				if (i != counts.end()){
+					i->second++;
+			   	} else {
+			    	counts[curr_int] = 1;
+			   }
 		   }
 		}
-	if(qT!=1){
-		for(auto iter=counts.begin(); iter!=counts.end(); ++iter)
-		{
-			sum += pow(iter->second,qT);
-		}
-	} else {
-		for(auto iter=counts.begin(); iter!=counts.end(); ++iter)
-		{
-			sum += (iter->second) * log10(iter->second);
-		}
+
+	for(auto iter=counts.begin(); iter!=counts.end(); ++iter)
+	{
+		piQT += pow((iter->second)/sumSp,qT);
 	}
-	return(sum);
+
+
+	for(auto iter=counts.begin(); iter!=counts.end(); ++iter)
+	{
+		double cnt = (iter->second)/sumSp;
+		double piHatT=pow(cnt,qT)/piQT;
+		AlphaQ+=piHatT*log10(cnt);
+		FQ+=piHatT*log10(piHatT);
+	}
+	
+	return(piQT);
 } 

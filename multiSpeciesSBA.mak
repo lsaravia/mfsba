@@ -15,10 +15,10 @@ X11LIBS=-L$(X11BASE)/lib -lX11
 
 SDLDEFS = -D__XWIN__
 
-I_DIRS=-I.. -I../../randlib/src 
+I_DIRS=-I.. 
 #P_DEFS=-DGRAPHICS -DPERIODIC_BOUNDARY
 
-#CFLAGS = -O3 -Wall -Ic:/cpp/fortify -Ic:/cpp/canew -DGRAPHICS -DFORTIFY -fexternal-templates 
+#CXXFLAGS = -O3 -Wall -std=gnu++0x $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 CXXFLAGS = -g -Wall -std=gnu++0x $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 
 O = mainMultispeciesMf.o mfSBA.o RWFile.o multiSpecies.o

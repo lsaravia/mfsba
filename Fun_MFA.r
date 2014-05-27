@@ -92,17 +92,11 @@ calcDq_multiSBA <- function(fname,parms,recalc=FALSE)
   for(nc in 1:ncol(pp)){
     if( class(pp[,nc ])=="factor") pp[,nc]<-as.numeric(as.character(pp[,nc])) 
   }
-  
-  if(pp[pp$q==1,]$alfa==0){
-    pp$Dq  <- with(pp,ifelse(q==1,Tau,Tau/(q-1)))
-    pp$SD.Dq  <- with(pp,ifelse(q==1,SD.Tau,abs(SD.Tau/(q-1))))
-    pp$R.Dq <- pp$R.Tau
+
+  pp$Dq  <- with(pp,ifelse(q==1,alfa,Tau/(q-1)))
+  pp$SD.Dq  <- with(pp,ifelse(q==1,SD.alfa,abs(SD.Tau/(q-1))))
+  pp$R.Dq <- with(pp,ifelse(q==1,R.alfa,R.Tau))
     
-  } else {
-    pp$Dq  <- with(pp,ifelse(q==1,alfa,Tau/(q-1)))
-    pp$SD.Dq  <- with(pp,ifelse(q==1,SD.alfa,abs(SD.Tau/(q-1))))
-    pp$R.Dq <- with(pp,ifelse(q==1,R.alfa,R.Tau))
-  }
   return(pp[,c("q","Dq","SD.Dq","R.Dq")])
 }
 

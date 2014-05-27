@@ -60,7 +60,7 @@ int standardBoxCountSAD(simplmat <double> &pixval,simplmat <double> &q, int &min
 
 double winMovSum(simplmat <double> &pixval,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd);
 double winMovNumSp(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd);
-double winMovSAD(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd,const double &qT);
+double winMovSAD(simplmat <double> &px,const int &rowIni,const int &rowEnd,const int &colIni,const int &colEnd,const double &qT,double &AlphaQ, double &FQ);
 
 #endif  // MF_H
 

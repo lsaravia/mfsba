@@ -55,9 +55,13 @@ int main(int argc, char * argv[])
     string opt=argv[6];
     	
 	simplmat <double> newdata(data);	
-
-	if(MultispeciesReordering(data,newdata))
-		MultifractalSBA(newdata, q,argv[1] ,minBox, maxBox, deltaBox, opt[0]);
+	if( toupper(opt[0])!='E')
+	{
+		if(MultispeciesReordering(data,newdata))
+			MultifractalSBA(newdata, q,argv[1] ,minBox, maxBox, deltaBox, opt[0]);
+	}
+	else
+		MultifractalSBA(data, q,argv[1] ,minBox, maxBox, deltaBox, opt[0]);
 
     if(opt[0]=='A')
     {
