@@ -26,9 +26,9 @@
 
 using namespace std;
 
-// 	Q: Valores de Q posibles 
+// 	q: q exponent for the multifractal estimation 
 //	pixval: Measure
-//  fileout: Archivo de Output
+//  outFile: Archivo de Output
 //
 int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFile,
 	int minBoxSize, int maxBoxSize, int numBoxSizes, char normalize)
@@ -74,6 +74,10 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	fFile << endl;
 	for(boxSize=0; boxSize<numBoxSizes; boxSize++)
 	{
+		// Use areas instead of side for SAD multifractals
+		if(normalize=='E')
+			box(boxSize) = pow(box(boxSize),2);
+
 		tFile << box(boxSize) << "\t" << log10(box(boxSize));
 		for(i=0;i<qNum;i++)
 			tFile << "\t" << tauQ(boxSize,i);
@@ -112,12 +116,12 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 }
 
 
-
-// 	Q: Valores de Q posibles 
-//	pixval: Measure
-//  fileout: Archivo de Output
+//  Multifractal estimation with a one-line output used for calling from other programs
 //
-//  Warning: assume dimX==dimY and minBoxSize=4
+// 	q: q exponent for the multifractal estimation 
+//	pixval: Measure
+//  ident: identification for the output 
+//
 //
 int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFile, 
 	int minBoxSize, int maxBoxSize, int numBoxSizes, char normalize, char * ident)
@@ -127,7 +131,11 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 	simplmat <double> alphaQ;
 	simplmat <double> fQ;
 
-	standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
+	if(normalize=='E')
+		standardBoxCountSAD(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
+    									box,tauQ, alphaQ, fQ);
+	else
+		standardBoxCount(pixval,q, minBoxSize, maxBoxSize, numBoxSizes, normalize,
     									box,tauQ, alphaQ, fQ, &winMovSum);
 
 	int qNum = q.getRows();
@@ -149,6 +157,13 @@ int MultifractalSBA(simplmat <double> &pixval,simplmat <double> &q, char * outFi
 		fb << "File\tq\tTau\talfa\tf(alfa)\tR-Tau\tR-alfa\tR-f\tSD-Tau\tSD-alfa\tSD-f" << endl;
 
 	simplmat <outRegress> outR(qNum);
+
+	// Use areas instead of side for SAD multifractals
+	if(normalize=='E')
+	{
+		for(i=0; i<numBoxSizes; i++)
+			box(i) = pow(box(i),2);
+	}
 
 	loglogRegress(q,numBoxSizes,box,tauQ,alphaQ,fQ,outR);
 

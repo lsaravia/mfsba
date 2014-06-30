@@ -2,7 +2,7 @@ rm(list = ls())
 
 # change to the folder wich contains mfSBA
 #
-setwd("/cpp/mfsba")
+#setwd("/cpp/mfsba")
 
 source('Fun_MFA.r')
 

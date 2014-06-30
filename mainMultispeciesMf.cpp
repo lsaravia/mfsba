@@ -20,7 +20,7 @@ int main(int argc, char * argv[])
         	 << "       option N: Not normalize measure use SRS" << endl
         	 << "              S: Normalize measure" << endl
         	 << "              A: Save the reordered distribution" << endl 
-			 << "              E: Use species number to compute dimensions" << endl	        	 
+			 << "              E: Use the spatial SAD to compute dimensions" << endl	        	 
 			 << "                 This option implies N" << endl;	        	 
         
 		exit(1);

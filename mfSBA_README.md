@@ -23,7 +23,6 @@ numBoxSize: if is less than the number of powers of 2 that number will be used c
 **option**
    + N: Not normalize measure
    + S: Normalize measure -> SUM all the pixels and divide each pixel by that value
-   + D: Add 1 and normalize -> Add 1 to all the image then normalize
    + A: Normalize measure and save
         
 
@@ -43,20 +42,33 @@ Same as t file but for f(alpha).
 s.[inputFile]
 The first line are labels.
 The first column are q's requested, 2nd is Tau the slope of log(zq) vs log(box size) to calculate Dq you
-have to divide it by (q-1) see equation 2 in [2]. The 3rd,4rd are the estimated alfa and f(alfa). Following 
-are the coeficients of determination of the linear regresions for each of the previous, and finally the sd's.
+have to divide it by (q-1) see equation 2 in [2]. The 3rd,4rd are the estimated alfa and f(alfa). Following are the coeficients of determination of the linear regresions for each of the previous, and finally the sd's.
 
+
+# multispeciesSBA
+
+The program assumes that the input file is a distribution of species, calculates the rank abundance distribution (RAD) and replace each species by its rank, this is called the species rank surface (SRS see [3]) then it applies multifractal spectra estimation using the canonical method [1]. 
+The program also calculates the multifractal distribution of species abundances distribution (SAD), as a generalization of species area curve, this is described in detail in [4].
+
+### Usage:
+
+	mf inputFile qFile minBox maxBox numBoxSizes option
+
+The parameters and output files are the same as previous, the only difference is options
+
+**option**
+   + N: Not normalize measure use SRS
+   + S: Normalize measure
+   + A: Save the SRS distribution
+   + E: Use the spatial SAD to compute dimensions
+        This option implies N
+
+ 
 
 
 #### To do:
 
-* Add MLE ﻿to estimate the power laws following Newman, M. E. J. 2005. Power laws, Pareto distributions and Zipf’s law. Contemporary Physics 46:323-351.
-
 * 1 dimension and quasi 1 dimension estimation is not implemented but it should be very easy to add it
-
-* 2 versions of the function multifractalSBA exist that are identical but with different outputs, they must be unified
-
-* The method for RAD (Rank abundance distribution) multifractal estimation is not well documented 
 
 
 
@@ -66,3 +78,6 @@ are the coeficients of determination of the linear regresions for each of the pr
 
 2. Saravia LA, Giorgi A, Momo F (2012) Multifractal growth in periphyton communities. Oikos 121: 1810–1820. doi:10.1111/j.1600-0706.2011.20423.x.
 
+3. Saravia LA (2014) mfSBA: Multifractal analysis of spatial patterns in ecological communities [v2; ref status: indexed, http://f1000r.es/347]. F1000Research 3: 14. doi:10.12688/f1000research.3-14.v2.
+
+4. Borda-de-Água L, Hubbell SP, McAllister M (2002) Species-Area Curves, Diversity Indices, and Species Abundance Distributions: A Multifractal Analysis. Am Nat 159: 138–155.
