@@ -22,10 +22,14 @@ was random.
 
 There are two scripts to test and demonstrate the software:
 
-**testMFA.r**: for standard multifractal analysis
+**testMFA.r**: Test and demostration of functions for standard, SRS and SAD multifractal analysis
 
 
-**testMFA_SAD.r**: for SRS and SAD multifractal analysis
+**Fun_MFA.r**: R Functions for multifractal analysis,  
+
+The output should be compared with the same files in folder testOut
+
+### Other files
 
 Several ".sed" files ".tif" are used as examples
 
