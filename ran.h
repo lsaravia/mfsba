@@ -1,3 +1,6 @@
+#ifndef RAN_H
+#define RAN_H
+
 #include <cmath>
 // Randon generator based on numerical recipes
 
@@ -73,3 +76,5 @@ struct Lognormaldev : Normaldev
 		return exp(mu+sig*Normaldev::dev());
 	}
 };
+
+#endif
