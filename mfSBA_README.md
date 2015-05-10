@@ -48,7 +48,8 @@ have to divide it by (q-1) see equation 2 in [2]. The 3rd,4rd are the estimated 
 # multispeciesSBA
 
 The program assumes that the input file is a distribution of species, calculates the rank abundance distribution (RAD) and replace each species by its rank, this is called the species rank surface (SRS see [3]) then it applies multifractal spectra estimation using the canonical method [1]. 
-The program also calculates the multifractal distribution of species abundances distribution (SAD), as a generalization of species area curve, this is described in detail in [4].
+The program also calculates the multifractal distribution of species abundances distribution (SAD), as a generalization of species area curve, this is described in detail in [4]. NOTE: for method E (Based on SAD) log(Zq) in t.[inputFile] and Tau in s.[inputFile] are multiplied by -1 so to calculate Dq=Tau/(q-1) like in the other methods.
+
 
 ### Usage:
 

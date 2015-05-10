@@ -2,7 +2,7 @@
 #define __SMATTPL_HPP
 
 #include <iostream>
-#include <cstdlib>
+#include <cstring>
 
 #ifdef __GNUC__
 //#include "fortify.h"
