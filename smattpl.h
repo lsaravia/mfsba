@@ -3,10 +3,7 @@
 
 #include <iostream>
 #include <cstring>
-
-#ifdef __GNUC__
-//#include "fortify.h"
-#endif
+#include <stdlib.h>
 
 #define INTEGER int
 using namespace std;
