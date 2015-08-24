@@ -39,9 +39,11 @@ The **q21.sed** is a file with q values used to estimate spectra.
 
 ### These programs were used in the following papers: 
 
-1. Saravia LA, Giorgi A, Momo FR (2012) Multifractal Spatial Patterns and Diversity in an Ecological Succession. PLoS One 7: e34096. 
+1. Saravia LA. (2105) A new method to analyse species abundances in space using generalized dimensionss. Methods in Ecology and Evolution. doi: 10.1111/2041-210X.12417
+
+2. Saravia LA, Giorgi A, Momo FR (2012) Multifractal Spatial Patterns and Diversity in an Ecological Succession. PLoS One 7: e34096. 
 ﻿
-2. Saravia LA, Giorgi A, Momo F (2012) Multifractal growth in periphyton communities. Oikos 121: 1810–1820.
+3. Saravia LA, Giorgi A, Momo F (2012) Multifractal growth in periphyton communities. Oikos 121: 1810–1820.
 
 
 
