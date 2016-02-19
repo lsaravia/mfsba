@@ -30,7 +30,35 @@ plot_sed_image <- function(fname,gname,dX=0,col=0,shf=0)
   levelplot(per, scales = list(draw = FALSE),xlab =NULL, ylab = NULL,col.regions=col.l,
             useRaster=T,at=seqat,
             main=list( gname,cex=1))
-  }
+}
+
+# sp: exclude species greater than sp
+# 
+plot3d_sed_image <- function(fname,gname,sp=0,col=0,shf=0)
+{
+  require(rgl)
+#  require(scatterplot3d)
+  require(RColorBrewer)
+  per <-data.matrix(read.table(fname, skip=2,header=F))
+  if(sp>0) per[per>sp]<-0
+  mp = max(per)
+
+  if(length(col)==1) colut <- colorRampPalette(c('white', 'green', 'purple', 'yellow', 'brown'))(mp) 
+  else colut <- colorRampPalette(col)(mp) 
+  col.l <- colut[per]
+  
+  x <- 1:ncol(per)
+  y <- 1:nrow(per)
+  open3d()
+  surface3d(x,y,per, xlab =NULL, ylab = NULL,col=col.l,
+                        main=list( gname,cex=1))
+#  s3d.dat <- data.frame(cols=as.vector(col(per)),
+#                        rows=as.vector(row(per)),
+#                        value=as.vector(per))
+#  scatterplot3d(s3d.dat, type="h",xlab =NULL, ylab = NULL,main=list( gname,cex=1))
+
+}
+
 
 # Read a sed file in a matrix
 #
